@@ -1,0 +1,7 @@
+{
+  "name": "Mathexpressioneditor",
+  "type": "MathExpressionEditor",
+  "entry": "./src/index.jsx",
+  "keywords": "MathExpressionEditor",
+  "style": "./src/style.css"
+}

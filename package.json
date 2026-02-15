@@ -1,0 +1,15 @@
+{
+  "name": "math-expression-editor",
+  "version": "0.1.0",
+  "private": true,
+  "main": "src/index.jsx",
+  "scripts": {
+    "dev": "pnpx @unifyapps/custom-component-cli dev math-expression-editor",
+    "build": "pnpx @unifyapps/custom-component-cli build math-expression-editor"
+  },
+  "dependencies": {
+    "@unifyapps/custom-component-cli": "^0.0.3",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
+  }
+}
