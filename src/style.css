@@ -1,3 +1,12 @@
-.math-expression-editor {
-  /* Add your styles here */
+/* Target only the actual ProseMirror editor element (both classes together) */
+.ProseMirror.tiptap,
+.ProseMirror.tiptap:focus {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  width: 100% !important;
+}
+
+.tiptap p {
+  margin: 0;
 }
