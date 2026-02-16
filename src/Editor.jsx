@@ -24,6 +24,7 @@ const S = {
     padding: '5px 8px',
     height: 36,
     boxSizing: 'border-box',
+    overflow: 'hidden',
   },
   wrapperFocused: {
     borderColor: '#b19fef',
@@ -45,11 +46,13 @@ const S = {
   editorContainer: {
     flex: 1,
     minWidth: 0,
+    overflowX: 'auto',
+    overflowY: 'hidden',
   },
 };
 
 const EDITOR_ATTR_STYLE =
-  'outline:none;border:none;box-shadow:none;width:100%;min-height:20px;word-break:break-word;font-size:14px;color:#1C1C1C;line-height:20px;font-weight:400;font-family:inherit;';
+  'outline:none;border:none;box-shadow:none;width:100%;min-height:20px;white-space:nowrap;font-size:14px;color:#1C1C1C;line-height:20px;font-weight:400;font-family:inherit;';
 
 export default function Editor({ expression, variables, onChange, placeholder = '' }) {
   const containerRef = useRef(null);

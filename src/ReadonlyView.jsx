@@ -35,6 +35,8 @@ const S = {
 };
 
 export default function ReadonlyView({ expression, variables }) {
+  if (!expression) return null;
+
   const tokens = useMemo(
     () => parseExpressionTokens(expression, variables),
     [expression, variables],

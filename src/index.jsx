@@ -12,21 +12,19 @@ function getParentFont() {
   return undefined;
 }
 
-const DUMMY_VARIABLES = [
-  { id: 'x_opc', name: 'x_opc', type: 'Number' },
-  { id: 'x_ppc', name: 'x_ppc', type: 'Number' },
-  { id: 's_opc', name: 's_opc', type: 'Number' },
-  { id: 'street_address', name: 'street_address', type: 'String' },
-  { id: 'quantity', name: 'quantity', type: 'Number' },
-  { id: 'unit_price', name: 'unit_price', type: 'Number' },
-];
-
-const DUMMY_EXPRESSION =
-  'SUM({{ x_opc }}, {{ x_ppc }}) - 0.002 * SUM(2 * {{ x_opc }}, 1.5 * {{ x_ppc }}) + 0.5 * {{ s_opc }}';
+function normalizeVariables(variables) {
+  if (!variables) return [];
+  return variables.map((v) => ({
+    id: v.id,
+    name: v.properties?.name ?? v.id,
+    type: v.properties?.type ?? 'String',
+  }));
+}
 
 export default function MathExpressionEditor(props) {
   const { data, emitOnChange } = props;
-  const { expression = DUMMY_EXPRESSION, readonly = false, variables = DUMMY_VARIABLES } = data || {};
+  const { expression = '', readonly = false, variables: rawVariables } = data || {};
+  const variables = useMemo(() => normalizeVariables(rawVariables), [rawVariables]);
 
   const rootStyle = useMemo(() => ({ fontFamily: getParentFont() }), []);
 
