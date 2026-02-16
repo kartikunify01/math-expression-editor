@@ -95,16 +95,16 @@ export default function Editor({ expression, variables, onChange, placeholder = 
     },
     onUpdate: ({ editor: ed }) => {
       if (suppressRef.current) return;
-      const { expression: expr, variableIds } = serializeExpression(ed.getJSON());
-      onChange?.(expr, variableIds);
       updateAutocomplete(ed);
     },
     onSelectionUpdate: ({ editor: ed }) => {
       if (suppressRef.current) return;
       updateAutocomplete(ed);
     },
-    onBlur: () => {
+    onBlur: ({ editor: ed }) => {
       setFocused(false);
+      const { expression: expr, variableIds } = serializeExpression(ed.getJSON());
+      onChange?.(expr, variableIds);
       setTimeout(() => {
         if (interactingRef.current) {
           interactingRef.current = false;
@@ -170,9 +170,6 @@ export default function Editor({ expression, variables, onChange, placeholder = 
       }
 
       suppressRef.current = false;
-
-      const expr = serializeExpression(editor.getJSON());
-      onChange?.(expr);
 
       setDropdownVisible(false);
       setQuery(null);
