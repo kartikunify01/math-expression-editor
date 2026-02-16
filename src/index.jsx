@@ -17,7 +17,7 @@ function normalizeVariables(variables) {
   return variables.map((v) => ({
     id: v.id,
     name: v.properties?.name ?? v.id,
-    type: v.properties?.type ?? 'String',
+    type: v.properties?.type ?? 'Variable',
   }));
 }
 
