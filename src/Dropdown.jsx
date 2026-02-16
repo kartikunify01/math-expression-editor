@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { createPortal } from 'react-dom';
+import { ICON_MAP } from './icons';
 
 const styles = {
   dropdown: {
     background: '#fff',
     border: '1px solid #f0f0f0',
-    borderRadius: 8,
+    borderBottomLeftRadius: 8,
+    borderBottomRightRadius: 8,
     boxShadow: '0 12px 16px -4px rgba(16,24,40,0.08), 0 4px 6px -2px rgba(16,24,40,0.03)',
     maxHeight: 280,
     overflow: 'hidden',
@@ -13,6 +15,10 @@ const styles = {
     flexDirection: 'column',
     fontFamily: 'inherit',
     boxSizing: 'border-box',
+    borderBottom: '1px solid #f0f0f0',
+    width: '100%',
+    marginTop: -2,
+    borderTop: 'none',
   },
   header: {
     padding: '8px 12px',
@@ -20,7 +26,9 @@ const styles = {
     color: '#525252',
     lineHeight: '12px',
     fontWeight: 500,
-    borderBottom: '1px solid #f0f0f0',
+    height: 24,
+    fontFamily: 'geist',
+    paragraphSpacing: 8,
   },
   list: {
     overflowY: 'auto',
@@ -30,9 +38,16 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: '8px 12px',
     cursor: 'pointer',
-    borderBottom: '1px solid #f9fafb',
+    height: 28,
+  },
+  innerItem: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: '8px 12px 4px 8px',
+    width: '100%',
+    height: '100%',
   },
   itemActive: {
     background: '#F7F7FF',
@@ -42,12 +57,14 @@ const styles = {
     fontSize: 12,
     lineHeight: '16px',
     fontWeight: 400,
+    fontFamily: 'geist',
   },
   varName: {
     color: '#1C1C1C',
     fontSize: 12,
     lineHeight: '16px',
     fontWeight: 400,
+    fontFamily: 'geist',
   },
   type: {
     fontSize: 12,
@@ -120,8 +137,12 @@ export default function Dropdown({
 
   const onSelectRef = useRef(onSelect);
   const itemsRef = useRef(items);
-  useEffect(() => { onSelectRef.current = onSelect; }, [onSelect]);
-  useEffect(() => { itemsRef.current = items; }, [items]);
+  useEffect(() => {
+    onSelectRef.current = onSelect;
+  }, [onSelect]);
+  useEffect(() => {
+    itemsRef.current = items;
+  }, [items]);
 
   useEffect(() => {
     setPortalContainer(getPortalContainer());
@@ -194,7 +215,7 @@ export default function Dropdown({
     width: position.width,
     zIndex: 99999,
   };
-
+  console.log('items: ', items);
   const content = (
     <div ref={attachNativeListeners} style={{ ...styles.dropdown, ...posStyle }}>
       {functionHint && (
@@ -207,29 +228,52 @@ export default function Dropdown({
         <>
           <div style={styles.header}>Input variables or functions</div>
           <div style={styles.list} ref={listRef}>
-            {items.map((item, i) => (
-              <div
-                key={item.id || item.name}
-                data-item-index={i}
-                style={{
-                  ...styles.item,
-                  ...(i === activeIndex ? styles.itemActive : undefined),
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = '#F7F7FF';
-                }}
-                onMouseLeave={(e) => {
-                  if (i !== activeIndex) e.currentTarget.style.background = 'transparent';
-                }}
-              >
-                <span style={item.itemType === 'function' ? styles.fnName : styles.varName}>
-                  {item.itemType === 'function' ? `${item.name}()` : item.name}
-                </span>
-                <span style={styles.type}>
-                  {item.itemType === 'function' ? 'Function' : item.varType || 'String'}
-                </span>
-              </div>
-            ))}
+            {items.map((item, i) => {
+              return (
+                <div
+                  key={item.id || item.name}
+                  data-item-index={i}
+                  style={{
+                    ...styles.item,
+                    ...(i === activeIndex ? styles.itemActive : undefined),
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = '#F7F7FF';
+                  }}
+                  onMouseLeave={(e) => {
+                    if (i !== activeIndex) e.currentTarget.style.background = 'transparent';
+                  }}
+                >
+                  <div
+                    style={{
+                      ...styles.innerItem,
+                      margin: '0 4px',
+                      borderTop: i === 0 ? 'none' : '1px solid #f0f0f0',
+                    }}
+                  >
+                    <span style={item.itemType === 'function' ? styles.fnName : styles.varName}>
+                      {item.itemType === 'function' ? `${item.name}()` : item.name}
+                    </span>
+                    <span style={styles.type}>
+                      {item.itemType === 'function' ? (
+                        'Function'
+                      ) : (
+                        <span style={{ display: 'inline-flex', gap: 4, alignItems: 'center' }}>
+                          <img
+                            src={ICON_MAP[item.type || 'Integer']}
+                            alt={item.type || 'Integer'}
+                            width={14}
+                            height={14}
+                          />
+                          <span>{item.type || 'Integer'}</span>
+                        </span>
+                      )}
+                    </span>
+                  </div>
+                </div>
+              );
+              // </div>
+            })}
           </div>
         </>
       )}

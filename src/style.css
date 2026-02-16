@@ -8,8 +8,10 @@
 }
 
 .tiptap p {
-  margin: 0;
+  margin: auto 0;
   white-space: nowrap;
+  display: flex;
+  align-items: center;
 }
 
 /* Hide scrollbar in editor container (WebKit) */

@@ -27,7 +27,7 @@ export default function MathExpressionEditor(props) {
   const variables = useMemo(() => normalizeVariables(rawVariables), [rawVariables]);
 
   const rootStyle = useMemo(() => ({ fontFamily: getParentFont() }), []);
-
+  console.log("data: ", data);
   const handleChange = useCallback(
     (newExpression, variableIds) => {
       emitOnChange?.({ expression: newExpression, variableIds });
