@@ -11,3 +11,9 @@
   margin: 0;
   white-space: nowrap;
 }
+
+/* Hide scrollbar in editor container (WebKit) */
+.ProseMirror.tiptap::-webkit-scrollbar,
+.tiptap::-webkit-scrollbar {
+  display: none;
+}

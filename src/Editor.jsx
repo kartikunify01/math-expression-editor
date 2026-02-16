@@ -46,8 +46,10 @@ const S = {
   editorContainer: {
     flex: 1,
     minWidth: 0,
-    overflowX: 'auto',
+    overflowX: 'scroll',
     overflowY: 'hidden',
+    scrollbarWidth: 'none',
+    msOverflowStyle: 'none',
   },
 };
 

@@ -23,7 +23,7 @@ function normalizeVariables(variables) {
 
 export default function MathExpressionEditor(props) {
   const { data, emitOnChange } = props;
-  const { expression = '', readonly = false, variables: rawVariables } = data || {};
+  const { expression = '', readonly = false, variables: rawVariables, placeholder } = data || {};
   const variables = useMemo(() => normalizeVariables(rawVariables), [rawVariables]);
 
   const rootStyle = useMemo(() => ({ fontFamily: getParentFont() }), []);
@@ -45,7 +45,7 @@ export default function MathExpressionEditor(props) {
 
   return (
     <div style={rootStyle}>
-      <Editor expression={expression} variables={variables} onChange={handleChange} />
+      <Editor expression={expression} variables={variables} onChange={handleChange} placeholder={placeholder} />
     </div>
   );
 }
